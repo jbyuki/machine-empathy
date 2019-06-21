@@ -102,7 +102,7 @@ auto guess_fsm(FSM* fsm, int guess_length) -> void
 	if(output == fsm->states[cur_state].output) {
 		std::cout << "Success!" << std::endl;
 	} else {
-		std::cout << "Unfortunatly it's not right answer, the correct answer was " << output << "." << std::endl;
+		std::cout << "Unfortunatly it's not right answer, the correct answer was " << fsm->states[cur_state].output << "." << std::endl;
 	}
 }
 

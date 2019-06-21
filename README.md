@@ -9,11 +9,11 @@ How to build
 1. Install a C++ compiler (Visual Studio, MinGW, ...)
 2. Install CMake
 3. Once in directory execute:
-	```
+```
 mkdir build
 cd build
 cmake ..
-	```
+```
 4. Compile project
 
 Notes

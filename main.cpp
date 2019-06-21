@@ -128,6 +128,8 @@ auto main() -> int
 	question_fsm(fsm);
 	guess_fsm(fsm);
 
+	system("PAUSE");
+
 	delete fsm;
 	return 0;
 }

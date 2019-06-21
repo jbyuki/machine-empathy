@@ -4,8 +4,8 @@
 #include <random>
 #include <cstdlib>
 
-int min_states = 2;
-int max_states = 4;
+int min_states = 3;
+int max_states = 3;
 int guess_length = 4;
 
 struct FSM
@@ -68,7 +68,7 @@ auto question_fsm(FSM* fsm) -> void
 	std::string s;
 	while(true) {
 		std::cout << fsm->states[cur_state].output << std::endl;
-		std::cout << "> " << std::endl;
+		std::cout << "> ";
 		std::cin >> s;
 
 		if(s == "s") {
@@ -82,6 +82,7 @@ auto question_fsm(FSM* fsm) -> void
 
 		if(input < 0 || input >= fsm->num_input) {
 			std::cout << "Invalid input." << std::endl;
+			continue;
 		}
 
 		cur_state = fsm->states[cur_state].nexts[input];

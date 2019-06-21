@@ -20,14 +20,10 @@ struct FSM
 	int start;
 };
 
-auto generate_fsm(int min_states, int max_states, int num_input, int num_output) -> FSM*
+auto generate_fsm(int num_states, int num_input, int num_output) -> FSM*
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
-
-	std::uniform_int_distribution<> dis_states(min_states, max_states);
-
-	int num_states = dis_states(gen);
 
 	std::uniform_int_distribution<> dis_state(0, num_states-1);
 
@@ -128,17 +124,16 @@ auto print_fsm(FSM* fsm) -> void
 
 auto main(int argc, char* argv[]) -> int
 {
-	if(argc < 6) {
-		std::cout << "INFO: ./game.exe MIN_STATES MAX_STATES NUM_INPUT NUM_OUTPUT GUESS_LENGTH" << std::endl;
+	if(argc < 5) {
+		std::cout << "INFO: ./game.exe NUM_STATES NUM_INPUT NUM_OUTPUT GUESS_LENGTH" << std::endl;
 	}
 
-	int min_states = std::atoi(argv[1]);
-	int max_states = std::atoi(argv[2]);
+	int num_states = std::atoi(argv[1]);
 	int num_input = std::atoi(argv[3]);
 	int num_output = std::atoi(argv[4]);
 	int guess_length = std::atoi(argv[5]);
 
-	FSM* fsm = generate_fsm(min_states, max_states, num_input, num_output);
+	FSM* fsm = generate_fsm(num_states, num_input, num_output);
 	std::cout << "FSM generated!" << std::endl;
 
 	std::cout << "Type a number to enter an input" << std::endl;

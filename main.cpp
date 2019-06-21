@@ -4,9 +4,6 @@
 #include <random>
 #include <cstdlib>
 
-int min_states = 2;
-int max_states = 4;
-int guess_length = 4;
 
 struct FSM
 {
@@ -23,7 +20,7 @@ struct FSM
 	int start;
 };
 
-auto generate_fsm() -> FSM*
+auto generate_fsm(int min_states, int max_states) -> FSM*
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -89,7 +86,7 @@ auto question_fsm(FSM* fsm) -> void
 	}
 }
 
-auto guess_fsm(FSM* fsm) -> void
+auto guess_fsm(FSM* fsm, int guess_length) -> void
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -136,9 +133,17 @@ auto print_fsm(FSM* fsm) -> void
 	}
 }
 
-auto main() -> int
+auto main(int argc, char* argv[]) -> int
 {
-	FSM* fsm = generate_fsm();
+	if(argc < 4) {
+		std::cout << "INFO: ./game.exe MIN_STATES MAX_STATES GUESS_LENGTH" << std::endl;
+	}
+
+	int min_states = std::atoi(argv[1]);
+	int max_states = std::atoi(argv[2]);
+	int guess_length = std::atoi(argv[3]);
+
+	FSM* fsm = generate_fsm(min_states, max_states);
 	std::cout << "FSM generated!" << std::endl;
 	std::cout << "There are " << fsm->num_input << " inputs" << std::endl;
 
@@ -147,7 +152,7 @@ auto main() -> int
 	std::cout << "Type 'q' to quit exploring and go to guessing game" << std::endl;
 
 	question_fsm(fsm);
-	guess_fsm(fsm);
+	guess_fsm(fsm, guess_length);
 	print_fsm(fsm);
 
 	system("PAUSE");

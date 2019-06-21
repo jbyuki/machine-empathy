@@ -19,6 +19,6 @@ cmake ..
 Notes
 -----
 
-Better play without writing only using head, default randomly generated finite states machines are not too large
+Better play without writing only using head, set a randomly generated finite states machines that is not too large
 
 This project is an attempt for people like me that have troubles understanding what they don't see. The person playing the game has to simulate in their head: to see something they don't see.

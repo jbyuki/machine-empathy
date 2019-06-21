@@ -20,7 +20,7 @@ struct FSM
 	int start;
 };
 
-auto generate_fsm(int min_states, int max_states) -> FSM*
+auto generate_fsm(int min_states, int max_states, int num_input, int num_output) -> FSM*
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -29,32 +29,25 @@ auto generate_fsm(int min_states, int max_states) -> FSM*
 
 	int num_states = dis_states(gen);
 
-	std::uniform_int_distribution<> dis_inputs(2, num_states);
-	std::uniform_int_distribution<> dis_outputs(2, num_states);
-
 	std::uniform_int_distribution<> dis_state(0, num_states-1);
 
-	int num_inputs = dis_inputs(gen);
-	int num_outputs = dis_outputs(gen);
-
-	std::uniform_int_distribution<> dis_input(0, num_inputs-1);
-	std::uniform_int_distribution<> dis_output(0, num_outputs-1);
+	std::uniform_int_distribution<> dis_input(0, num_input-1);
+	std::uniform_int_distribution<> dis_output(0, num_output-1);
 
 	FSM* fsm = new FSM;
 	fsm->states.resize(num_states);
 
 	for(auto& state : fsm->states) {
-		state.nexts.resize(num_inputs);
+		state.nexts.resize(num_input);
 		for(int& next : state.nexts) {
 			next = dis_state(gen);
 		}
 		state.output = dis_output(gen);
 	}
 
-	fsm->num_input = num_inputs;
-	fsm->num_output = num_outputs;
+	fsm->num_input = num_input;
+	fsm->num_output = num_output;
 	fsm->start = dis_state(gen);
-
 	
 	return fsm;
 }
@@ -135,17 +128,18 @@ auto print_fsm(FSM* fsm) -> void
 
 auto main(int argc, char* argv[]) -> int
 {
-	if(argc < 4) {
-		std::cout << "INFO: ./game.exe MIN_STATES MAX_STATES GUESS_LENGTH" << std::endl;
+	if(argc < 6) {
+		std::cout << "INFO: ./game.exe MIN_STATES MAX_STATES NUM_INPUT NUM_OUTPUT GUESS_LENGTH" << std::endl;
 	}
 
 	int min_states = std::atoi(argv[1]);
 	int max_states = std::atoi(argv[2]);
-	int guess_length = std::atoi(argv[3]);
+	int num_input = std::atoi(argv[3]);
+	int num_output = std::atoi(argv[4]);
+	int guess_length = std::atoi(argv[5]);
 
-	FSM* fsm = generate_fsm(min_states, max_states);
+	FSM* fsm = generate_fsm(min_states, max_states, num_input, num_output);
 	std::cout << "FSM generated!" << std::endl;
-	std::cout << "There are " << fsm->num_input << " inputs" << std::endl;
 
 	std::cout << "Type a number to enter an input" << std::endl;
 	std::cout << "Type 's' to go back to initial state" << std::endl;

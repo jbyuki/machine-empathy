@@ -129,9 +129,9 @@ auto main(int argc, char* argv[]) -> int
 	}
 
 	int num_states = std::atoi(argv[1]);
-	int num_input = std::atoi(argv[3]);
-	int num_output = std::atoi(argv[4]);
-	int guess_length = std::atoi(argv[5]);
+	int num_input = std::atoi(argv[2]);
+	int num_output = std::atoi(argv[3]);
+	int guess_length = std::atoi(argv[4]);
 
 	FSM* fsm = generate_fsm(num_states, num_input, num_output);
 	std::cout << "FSM generated!" << std::endl;
